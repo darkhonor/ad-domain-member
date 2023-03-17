@@ -1,0 +1,5 @@
+---
+# tasks file for ad-domain-member
+- name: "Configure {{ ansible_facts['distribution'] }}"
+  include_tasks: redhat.yml
+  when: "ansible_facts['distribution'] in ['RedHat', 'CentOS', 'Rocky', 'AlmaLinux']"

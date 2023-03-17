@@ -1,0 +1,38 @@
+- name: Install required software
+  ansible.builtin.dnf:
+    name:
+      - samba-common-tools
+      - realmd
+      - oddjob
+      - oddjob-mkhomedir
+      - sssd
+      - adcli
+      - krb5-workstation
+    state: present
+  when: "ansible_facts['distribution_major_version'] >= \"8\""
+- name: Discover realm 
+  ansible.builtin.command: /bin/bash -c "/usr/sbin/realm discover {{ realm_domain }}"
+  register: realm_discover_results
+- name: Discover realm debug
+  ansible.builtin.debug: 
+    msg: "{{ realm_discover_results.stdout }}"
+- name: Join system to AD
+  ansible.builtin.expect:
+    command: /bin/bash -c "/usr/sbin/realm join {{ realm_domain }} --computer-ou='{{ realm_ad_ou }}' --user={{ domain_join_user }}"
+    responses:
+      (?i)Password: "{{ domain_join_password }}"
+- name: Copy sudoers configuration
+  ansible.builtin.template:
+    src: allow-domain-admin.j2
+    dest: /etc/sudoers.d/allow-domain-admin
+    owner: root 
+    group: root 
+    mode: '0644'
+    state: present
+- name: Copy sssd.conf
+  ansible.builtin.template:
+    src: sssd.conf.j2
+    dest: /etc/sssd/sssd.conf
+    owner: root
+    group: root
+    mode: 0644

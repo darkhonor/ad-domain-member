@@ -1,0 +1,23 @@
+galaxy_info:
+  author: Alex Ackerman
+  description: Join a system to an Active Directory domain
+  company: VM HomeLab
+  role_name: ad_domain_member
+  
+  # If the issue tracker for your role is not on github, uncomment the
+  # next line and provide a value
+  # issue_tracker_url: http://example.com/issue/tracker
+
+  license: Apache-2.0
+
+  min_ansible_version: "2.9"
+
+  #
+  # Additional platforms will be added as I have time. But RHEL 8 is my current need.
+  platforms:
+  - name: EL
+    versions: ["8"]
+
+  galaxy_tags: []
+
+dependencies: []

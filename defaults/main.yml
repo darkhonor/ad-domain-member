@@ -1,0 +1,8 @@
+---
+# defaults file for ad-domain-member
+realm_domain: homelab.net
+krb5_default_realm: HOMELAB.NET
+realm_ad_ou: 
+domain_join_user: 
+domain_join_password: 
+ad_priv_group: Domain\ Admins
